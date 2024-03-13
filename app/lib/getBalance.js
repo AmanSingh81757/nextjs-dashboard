@@ -78,7 +78,6 @@ function sendEmail(balance) {
   });
 }
 
-// Schedule the task to run every morning at 8 AM
 export async function getBalance(){
   cron.schedule('11 20 * * *', async () => {
     try {

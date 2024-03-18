@@ -48,6 +48,7 @@ async function getElectricityBalance() {
       })
     });
     const data = await response.json();
+    if(data.cart.error) return data.cart.error;
     return data.cart.cart_items[0].meta_data.due_amount;
 }
 
@@ -78,10 +79,11 @@ function sendEmail(balance) {
   });
 }
 
-export async function getBalance(){
-  cron.schedule('11 20 * * *', async () => {
+export default async function getBalance(){
+  cron.schedule('1 12 * * *', async () => {
     try {
       const balance = await getElectricityBalance();
+      console.log(balance);
       sendEmail(balance);
     } catch (error) {
       console.error('Error fetching electricity balance:', error.message);
